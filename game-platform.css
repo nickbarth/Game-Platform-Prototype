@@ -1,0 +1,11 @@
+html {
+  width: 100%;
+}
+
+#add-game-view {
+  display: none;
+}
+
+#login-view {
+  display: none;
+}

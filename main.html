@@ -1,0 +1,85 @@
+<template name="main">
+  {{>mainNav}}
+  <h1>Game Platform</h1>
+  {{>signIn}}
+  {{>addGame}}
+  <h2>Games</h2>
+  {{>gamesView}}
+</template>
+
+<template name="mainNav">
+  {{#if currentUser}}
+    {{#with currentUser}}
+      Welcome Back, {{username}}.
+      <button id="add-game-button">Add Game</button>
+      <button id="logout-button">Logout</button>
+    {{/with}}
+  {{else}}
+    <button id="login-button">Login</button>
+  {{/if}}
+  <hr/>
+</template>
+
+<template name="signIn">
+  <div id="login-view">
+    <h2>Sign In</h2>
+    <form id="login-form">
+      <input id="login-username" type="text" placeholder="john.doe@example.com">
+      <input id="login-password" type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">
+      <button type="submit">Sign In</button>
+      <button id="login-form-cancel">Cancel</button>
+    </form>
+  </div>
+</template>
+
+<template name="addGame">
+  <div id="add-game-view">
+    <h2>Add Game</h2>
+    <form id="add-game-form">
+      <input id="game-name" type="text" placeholder="Game Name">
+      <input id="game-genre" type="text" placeholder="Game Genre">
+      <button type="submit">Add Game</button>
+      <button id="add-game-cancel">Cancel</button>
+    </form>
+  </div>
+</template>
+
+<template name="gamesView">
+  <div id="games-view">
+    {{#each games}}
+      {{>gameView}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="gameView">
+  <div id="game-view" style="border: 1px solid #aaa; margin: 20px; padding: 20px;">
+    <h4>{{name}} - {{genre}} - By {{gameBy}}</h4>
+    {{#if src}}
+      <iframe src="{{src}}" style="width:200px;height:200px;"></iframe><br/>
+    {{/if}}
+    {{#if isOwner gameBy}}
+      Edit Game <input type="file" />
+    {{/if}}
+    {{>commentsView}}
+  </div>
+</template>
+
+<template name="commentsView">
+  <h5>Comments</h5>
+  {{#each comments}}
+    {{>commentView}}
+  {{/each}}
+  {{#if isSignedIn}}
+    <form id="comment-form">
+      <input type="text" id="comment-text"><br/>
+      <button type="submit">Add Comment</button>
+    </form>
+  {{/if}}
+</template>
+
+<template name="commentView">
+  Name: {{name}} |
+  Comment: {{text}}
+  <br/><br/>
+</template>
